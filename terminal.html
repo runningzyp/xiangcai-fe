@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Title Page</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="./static/css/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="./static/css/terminal.css" rel="stylesheet">
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+  <h1 class="text-center"> hello world</h1>
+  <div class="terminal">
+    <div class="title-bar">
+      <div class="title-bar-content">
+        <div class="options" @mouseover="iconShow=false" @mouseout="iconShow=true">
+          <div class="closesize symbol" v-bind:class="{imageHidden : iconShow}"></div>
+          <div class="minisize symbol" v-bind:class="{imageHidden : iconShow}"></div>
+          <div class="maximize symbol" v-bind:class="{imageHidden : iconShow}"></div>
+        </div>
+        <div class="title-message">
+          <span>
+            <p id="wel-string" style="text-align: center;"></p>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="interface">
+      <span class="welcome">
+        <p id="login-string"></p>
+      </span>
+      <div class="interactiveArea">
+        <div v-for="(item, index) in items" :key="index">
+          <span class="guide" v-bind:class="{hidden:item['guideHidden']}">
+            <p style="color: #64A6E1;">~</p>
+            <p>you now on</p>
+            <p>⬢</p>
+            <a class="currentPath" href="#" v-on:click="runCommand(index)">{{item['header']}}</a>
+          </span>
+          <span class="input" v-bind:class="{hidden:item['inputHidden']}">
+            <p style="color: #8EC640;">➜</p>
+            <p><input class="typed"></input></p>
+          </span>
+          <span class=" output" v-bind:class="{hidden:item['outputHidden']}">
+            <!-- <p style="color: #8EC640;">➜</p> -->
+            <p class="typed" v-if="result && result.type=='folder'" v-for="(result, index) in item['results']"
+              :key="index">{{result.value}}</p>
+            <a class="typed" v-if="result && result.type=='file'" v-for="(result, index) in item['results']"
+              :key="index">{{result.value}}</a>
+          </span>
+        </div>
+      </div>
+      <div class="scrollBar">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="./static/js/jquery/jquery.js"></script>
+  <!-- Bootstrap JavaScript -->
+  <script src="./static/js/jquery/bootstrap.js"></script>
+  <!-- Vue  -->
+  <script src="./lib/vue.js" type="text/javascript"></script>
+  <script src="./static/js/axios.min.js"></script>
+  <script src="./static/js/terminal.js"></script>
+  <script src="./lib/typed.js" type="text/javascript"></script>
+
+
+
+  <script>
+    $(document).ready(function () {
+
+      var typed = new Typed('#wel-string', {
+        strings: ["正在建立连接....", "连接中...", "success!"],
+        typeSpeed: 100,
+        showCursor: false,
+        onComplete: (self) => {
+          var second = new Typed('#login-string', {
+            strings: ["Last login: Sun Dec 1 19:42:19 on ttys001"],
+            typeSpeed: 10,
+            showCursor: false,
+            fadeOut: true,
+          });
+        },
+      });
+
+
+    });
+
+  </script>
+</body>
+
+</html>
